@@ -1,0 +1,5 @@
+filename = "rosalind_revc_1_dataset.txt"
+dna = open(filename,"r").read().strip().upper()
+complimentry = dna.replace('A','0').replace('T',"A").replace('0','T').replace('C','1').replace('G','C').replace('1','G')
+rev_complimentry = complimentry[::-1]
+print(rev_complimentry)
