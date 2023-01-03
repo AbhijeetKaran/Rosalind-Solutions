@@ -1,0 +1,67 @@
+import itertools
+import numpy as np
+
+
+def sortReturnCord(l1,codeDict):
+    duplicate1 = l1.copy()
+    duplicate2 = [codeDict[x] for x in duplicate1]
+    sortind = np.argsort(duplicate2)
+    return sortind    
+
+def rearange(matrix,newCord):
+    copyMatrix = matrix.copy()
+    nRow,nCol = np.shape(matrix)
+    for e,i in enumerate(newCord):
+        copyMatrix[e,:] = matrix[i,:]
+    return copyMatrix
+
+def partThem(matrix,col):
+    x = matrix[:,col]
+    x[x == 'None'] = '#'
+    x = np.array(list(map(ord,x)))
+    xDiff = np.abs(np.diff(x))
+    locC = [e for e,i in enumerate(xDiff) if i != 0]
+    start = []
+    s = 0
+    end = []
+    e = 0
+    for i in locC:
+        start.append(s)
+        e = i
+        end.append(e+1)
+        s = e+1
+    start.append(s)
+    end.append(len(x)+1)
+    return start,end
+
+filename = "rosalind_lexv.txt"
+fh = open(filename,"r")
+alphabets = fh.readline().strip().split(' ')
+alphadict = {x:e for e,x in enumerate(alphabets,1)}
+alphadict['None'] = 0
+k = int(fh.readline().strip())
+fullList = []
+
+for x in range(1,k+1):
+    xpt = itertools.product(alphabets,repeat=x)
+    for i in xpt:
+        n = list(i)
+        left = (k-len(n))
+        n.extend(['None']*left)
+        fullList.append(n)
+
+n = np.vstack(fullList)
+nRow,nCol = np.shape(n)
+start = [0] 
+end = [nRow]
+for nc in range(0,nCol):
+    for ii in range(0,len(start)):
+        originals = n[start[ii]:end[ii],nc]
+        sortR = sortReturnCord(originals,alphadict)
+        n[start[ii]:end[ii],] = rearange(n[start[ii]:end[ii],],sortR)
+    start,end = partThem(n,nc)
+
+lexList = []
+for nro in range(0,nRow):
+    r = n[nro,]
+    print(''.join(r).replace('#','').replace('None',''))
