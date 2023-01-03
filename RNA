@@ -1,1 +1,4 @@
-
+filename = "rosalind_rna_1_dataset.txt"
+dna = open(filename,"r").read().strip()
+rna = dna.replace('T','U')
+print(rna)
