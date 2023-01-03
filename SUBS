@@ -1,0 +1,9 @@
+filename = "rosalind_subs_1_dataset.txt"
+fh = open(filename,"r")
+template = fh.readline().strip()
+motif = fh.readline().strip()
+
+tl = len(template)
+ml = len(motif)
+ploc = ' '.join([str(x+1) for x in range(0,tl-ml+1) if motif == template[x:x+ml]])
+print(ploc)
