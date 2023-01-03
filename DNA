@@ -1,4 +1,3 @@
-
 filename = "/rosalind_sign.txt"
 seqId,seq = readFastaOne(filename)
 seq = seq.upper()
