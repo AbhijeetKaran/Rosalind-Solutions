@@ -1,0 +1,25 @@
+def readFastaMulti(filename):
+    seq_dict = {}
+    fh = open(filename,"r")
+    data = fh.read().strip().split('>')
+    data.pop(0)
+    sequences = []
+    for block in data:
+        block = block.split('\n')
+        seqId = block[0]
+        seq = ''.join(block[1:])
+        seq_dict[seqId] = seq
+    return seq_dict
+
+filename = "rosalind_tran.txt"
+seq = readFastaMulti(filename)
+seq1,seq2 = list(seq.values())
+ts = 0
+tv = 0
+for i,a in enumerate(seq1):
+    if seq1[i] != seq2[i]:
+        if (seq1[i] in ['A','G'] and seq2[i] in ['A','G']) or (seq1[i] in ['C','T'] and seq2[i] in ['C','T']):
+            ts+=1
+        elif seq1[i] != seq2[i]:
+            tv+=1
+print(f"{round(ts/tv,11)}")
