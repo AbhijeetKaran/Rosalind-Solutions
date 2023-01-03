@@ -1,0 +1,32 @@
+
+def readFastaMulti(filename):
+    seq_dict = {}
+    fh = open(filename,"r")
+    data = fh.read().strip().split('>')
+    data.pop(0)
+    sequences = []
+    for block in data:
+        block = block.split('\n')
+        seqId = block[0]
+        seq = ''.join(block[1:])
+        seq_dict[seqId] = seq
+    return seq_dict
+
+filename = "rosalind_sseq.txt"
+seq = readFastaMulti(filename)
+seq = list(seq.values())
+template = "" 
+motif = ""
+if len(seq[0]) > len(seq[1]):
+    template,motif = seq
+else:
+    motif,template = seq
+pos = []
+p = 0
+for x in motif:   
+    for i in range(p,len(template)):
+        if x == template[i]:
+            pos.append(str(i+1))
+            p=i+1
+            break
+print(' '.join(pos))
