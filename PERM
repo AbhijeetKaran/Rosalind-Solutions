@@ -1,0 +1,13 @@
+import numpy as np
+from itertools import permutations
+
+
+filename = "rosalind_perm.txt"
+n = int(open(filename,"r").read().strip())
+numset = np.arange(1,n+1)
+perm = set(permutations(numset))
+print(len(perm))
+
+for x in perm:
+    x = map(str,x)
+    print(f"{' '.join(x)}")
