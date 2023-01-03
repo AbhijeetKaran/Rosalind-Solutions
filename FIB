@@ -1,0 +1,14 @@
+filename = "rosalind_fib.txt"
+data = open(filename,"r").read().strip().split(" ")
+Month,offsprings = list(map(int,data))
+old = []
+new = 0
+for gen in range(0,Month):
+    if gen == 0:
+        old.append(1)
+    elif gen == 1:
+        new = sum(old)*offsprings
+    else:
+        old.append(new)
+        new = sum(old[:-1])*offsprings
+print(sum(old))
