@@ -1,0 +1,20 @@
+import numpy as np
+
+filename = "rosalind_gc_1_dataset.txt"
+data = open(filename,"r").read().strip().split('>')
+data.pop(0)
+
+id_set = []
+seq_set = []
+
+for block in data:
+    block = block.split('\n')
+    seqId = block[0]
+    seq = ''.join(block[1:])
+    gcp = (seq.count('G')+seq.count('C'))/len(seq)*100
+    id_set.append(seqId)
+    seq_set.append(gcp)
+
+seq_set = np.array(seq_set)
+q = np.argmax(seq_set)
+print(f"{id_set[q]}\n{round(seq_set[q],6)}")
