@@ -1,0 +1,10 @@
+filename = "rosalind_hamm_1_dataset.txt"
+fh = open(filename,"r")
+seq1 = fh.readline()
+seq2 = fh.readline()
+hamm = 0
+
+for i in range(len(seq1)):
+    if seq1[i] != seq2[i]:
+        hamm+=1
+print(hamm)
