@@ -1,0 +1,11 @@
+filename = "rosalind_revp.txt"
+seq = open(filename,"r").read().strip().split("\n")
+seq.pop(0)
+seq = ''.join(seq)
+seqLen = len(seq)
+for rs in range(4,13):
+    for st in range(0,seqLen-rs+1):
+        motif = seq[st:st+rs]
+        motif_revComp = (motif.replace('A','0').replace('T',"A").replace('0','T').replace('C','1').replace('G','C').replace('1','G'))[::-1]
+        if motif == motif_revComp:
+            print(f"{st+1} {rs}")
