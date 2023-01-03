@@ -1,0 +1,9 @@
+# Counting DNA Nucleotides 
+### Script
+
+filename = "/rosalind_sign.txt"
+seqId,seq = readFastaOne(filename)
+seq = seq.upper()
+print(f"{seq.count('A')} {seq.count('C')} {seq.count('G')} {seq.count('T')}")
+
+### output:
