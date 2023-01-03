@@ -1,0 +1,36 @@
+codonS={'UCA': 'S','UUU': 'F','UUG': 'L','UUC': 'F','UUA': 'L','UGU': 'C','UGG': 'W','UGC': 'C','UGA': '*','UCU': 'S','UCG': 'S','UCC': 'S','UAU': 'Y','UAG': '*','UAC': 'Y','UAA': '*','GUU': 'V','GUG': 'V','GUC': 'V','GUA': 'V','GGU': 'G' ,'GGG': 'G','GGC': 'G','GGA': 'G','GCU': 'A','GCG': 'A','GCC': 'A','GCA': 'A','GAU': 'D','GAG': 'E','GAC': 'D','GAA': 'E','CUU': 'L','CUG': 'L','CUC': 'L','CUA': 'L','CGU': 'R','CGG': 'R','CGC': 'R','CGA': 'R','CCU': 'P','CCG': 'P','CCC': 'P','CCA': 'P','CAU': 'H','CAG': 'Q','CAC': 'H','CAA': 'Q','AUU': 'I','AUG': 'M','AUC': 'I','AUA': 'I','AGU': 'S','AGG': 'R','AGC': 'S','AGA': 'R','ACU': 'T','ACG': 'T','ACC': 'T','ACA': 'T','AAU': 'N','AAG': 'K','AAC': 'N','AAA': 'K'}
+filename = "rosalind_orf.txt"
+seq = open(filename,"r").read().strip().split("\n")
+seq.pop(0)
+seq = ''.join(seq)
+seq = seq.replace('T','U').upper()
+rev_comp = (seq.replace('A','0').replace('U',"A").replace('0','U').replace('C','1').replace('G','C').replace('1','G'))[::-1]
+
+reading_Frames = {}
+for start in range(0,3):
+    stop_t = len(seq[start:])%3
+    stop = len(seq)-stop_t
+    rf =  ''.join([codonS[seq[x:x+3]] for x in range(start,stop,3)])
+    rf_c = ''.join([codonS[rev_comp[x:x+3]] for x in range(start,stop,3)])
+    indx_p = '+'+str(start)
+    indx_n = '-'+str(start)
+    reading_Frames[indx_p] = rf
+    reading_Frames[indx_n] = rf_c 
+
+orf_collection = []
+for k,v in reading_Frames.items():
+    start_loc = [i for i,x in enumerate(v) if x == 'M']
+    stop_loc = [i for i,x in enumerate(v) if x == '*']
+    if len(start_loc) != 0 and len(stop_loc) != 0:
+        for ss in start_loc:
+            for sp in stop_loc:
+                if ss >= sp:
+                    continue
+                else:
+                    res = v[ss:sp]
+                    if not '*' in res:
+                        orf_collection.append(res)
+
+orf_collection = set(orf_collection)
+for t in orf_collection:
+    print(t)
