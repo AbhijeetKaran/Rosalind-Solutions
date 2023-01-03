@@ -1,0 +1,32 @@
+import numpy as np
+
+
+def readFastaMulti(filename):
+    seq_dict = {}
+    fh = open(filename,"r")
+    data = fh.read().strip().split('>')
+    data.pop(0)
+    sequences = []
+    for block in data:
+        block = block.split('\n')
+        seqId = block[0]
+        seq = ''.join(block[1:])
+        seq_dict[seqId] = seq
+    return seq_dict
+
+filename = "rosalind_cons.txt"
+seq_dict = readFastaMulti(filename)
+nuc = ['A','C','G','T']
+matrix = np.vstack([list(v) for k,v in seq_dict.items()])
+r,c = np.shape(matrix)
+nuc_dic = [{x:''.join(matrix[:,co]).count(x) for x in nuc} for co in range(c)]
+consensus = ''.join([max(e,key=e.get) for e in nuc_dic])
+print(consensus)
+
+profile_dict = dict.fromkeys(nuc,"")
+for profile in nuc_dic:
+    for n in nuc:
+        profile_dict[n] += f"{str(profile[n])} "
+
+for k,v in profile_dict.items():
+    print(f"{k}: {v.strip()}")
