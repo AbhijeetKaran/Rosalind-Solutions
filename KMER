@@ -1,0 +1,13 @@
+def readFastaOne(filename):
+    fh = open(filename,"r")
+    seq = fh.read().strip().split("\n")
+    seqId = seq.pop(0)
+    seq = ''.join(seq)
+    return seqId,seq
+
+filename = "rosalind_kmer.txt"
+seqId,seq = readFastaOne(filename)
+allmotifs = sorted([seq[x:x+4] for x in range(0,len(seq)-4+1)])
+uniq_motif = sorted(set(allmotifs))
+countMotif = [str(allmotifs.count(x)) for x in uniq_motif]
+print(' '.join(countMotif))
