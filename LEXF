@@ -1,0 +1,16 @@
+from itertools import product
+
+
+def readFastaOne(filename):
+    fh = open(filename,"r")
+    seq = fh.read().strip().split("\n")
+    seqId = seq.pop(0)
+    seq = ''.join(seq)
+    return seqId,seq
+
+filename = "rosalind_lexf.txt"
+s,sd = readFastaOne(filename)
+s = list(s.replace(' ',''))
+sd = int(sd)
+pro = product(s, repeat = sd)
+[print(''.join(x)) for x in pro]
