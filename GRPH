@@ -1,0 +1,30 @@
+import itertools
+
+def readFastaMulti(filename):
+    seq_dict = {}
+    data = open(filename,"r").read().strip().split('>')
+    data.pop(0)
+    sequences = []
+    for block in data:
+        block = block.split('\n')
+        seqId = block[0]
+        seq = ''.join(block[1:])
+        seq_dict[seqId] = seq
+    return seq_dict
+
+def checkOverlap(seq1,seq2,k):
+    if seq1[:k] == seq2[-k:]:
+        return True
+    return False
+
+filename = "rosalind_grph.txt"
+seqdict = readFastaMulti(filename)
+kdt = list(seqdict.keys())
+combs = itertools.combinations(kdt,2)
+for xr in range(3,4):
+    for x in combs:
+        seq1,seq2 = x
+        if checkOverlap(seqdict[seq1],seqdict[seq2],xr):
+            print(f"{seq2} {seq1}")
+        elif checkOverlap(seqdict[seq2],seqdict[seq1],xr):
+            print(f"{seq1} {seq2}")
