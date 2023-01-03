@@ -1,0 +1,13 @@
+codonS={'UCA': 'S','UUU': 'F','UUG': 'L','UUC': 'F','UUA': 'L','UGU': 'C','UGG': 'W','UGC': 'C','UGA': '*','UCU': 'S','UCG': 'S','UCC': 'S','UAU': 'Y','UAG': '*','UAC': 'Y','UAA': '*','GUU': 'V','GUG': 'V','GUC': 'V','GUA': 'V','GGU': 'G' ,'GGG': 'G','GGC': 'G','GGA': 'G','GCU': 'A','GCG': 'A','GCC': 'A','GCA': 'A','GAU': 'D','GAG': 'E','GAC': 'D','GAA': 'E','CUU': 'L','CUG': 'L','CUC': 'L','CUA': 'L','CGU': 'R','CGG': 'R','CGC': 'R','CGA': 'R','CCU': 'P','CCG': 'P','CCC': 'P','CCA': 'P','CAU': 'H','CAG': 'Q','CAC': 'H','CAA': 'Q','AUU': 'I','AUG': 'M','AUC': 'I','AUA': 'I','AGU': 'S','AGG': 'R','AGC': 'S','AGA': 'R','ACU': 'T','ACG': 'T','ACC': 'T','ACA': 'T','AAU': 'N','AAG': 'K','AAC': 'N','AAA': 'K'}
+c_k = codonS.values()
+c_s = set(c_k)
+cc_S = ''.join(c_k)
+ntable = {x:cc_S.count(x) for x in c_s}
+
+filename = "rosalind_mrna.txt"
+protein = open(filename,"r").read().strip()
+tpc = 1
+for aa in protein:
+    tpc*=ntable[aa]
+tppc = (tpc*3)%1000000
+print(f"{tppc}")
