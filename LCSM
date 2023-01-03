@@ -1,0 +1,25 @@
+import numpy as np
+
+filename = "rosalind_lcsm.txt"
+data = open(filename,"r").read().strip().split('>')
+data.pop(0)
+seq_set = [''.join(block.split('\n')[1:]) for block in data]
+tseq = len(seq_set)-1
+
+m = len(seq_set[0])
+atm = []
+for ml in range(m,1,-1):
+    for motifs in range(0,m-ml+1): 
+        atm.append(seq_set[0][motifs:motifs+ml])
+allset_motif = sorted(atm,key=len)[::-1]
+
+for mi,motif in enumerate(allset_motif):
+    tf_set = np.array([False]*tseq)
+    for x in range(1,len(seq_set)):
+        if motif in seq_set[x]:
+            tf_set[x-1] = True
+
+    tf_set = np.array(tf_set)
+    if np.all(tf_set):
+        print(motif)
+        break
