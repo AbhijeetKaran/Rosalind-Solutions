@@ -1,7 +1,7 @@
 ![logo](https://user-images.githubusercontent.com/53552871/210331210-d27083ea-e33a-4c68-9492-68b9d56190e0.png)
 # Rosalind-Solutions
 
-Here ia my collection of solutions to *Rosalind computational problems*. All the solutions are written in python. Most of the solutions are written keeping time efficiency in mind. Feel free to comment.
+Here is my collection of solutions to *Rosalind computational problems*. All the solutions are written in python. Most of the solutions are written keeping time efficiency in mind. Feel free to comment.
 
 | Problem id | Problem title | Description |
 | ---------- | ------------- | ----------- |
